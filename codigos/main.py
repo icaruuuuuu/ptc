@@ -193,6 +193,6 @@ def main():
             for conn in conexoes:
                 send_msg(conn, entrada)
         
-        with peers_lock: peers = peers[0] + list(set(peers[1:]))
+        with peers_lock: peers = [peers[0]] + list(set(peers[1:]))
         
 main()
