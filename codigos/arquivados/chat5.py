@@ -58,8 +58,10 @@ def handle_peers(conn, addr):
                 peers.remove(addr)
 
 def send_msg(peer: tuple, msg: str):
+    global PORTA
     try:
         client = socket(AF_INET, SOCK_STREAM)
+        client.bind(('0.0.0.0', PORTA))
         client.connect(peer)
         client.sendall(msg.encode('utf-8'))
     except Exception as e:
