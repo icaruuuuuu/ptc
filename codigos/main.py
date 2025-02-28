@@ -177,6 +177,8 @@ def main():
 
     while True:
         entrada = input()
+        if entrada == '':
+            continue
         if entrada.split()[0] == '/connect':
             connect(entrada.split()[1])
             continue
