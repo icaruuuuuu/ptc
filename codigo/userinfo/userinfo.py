@@ -1,5 +1,11 @@
 import json
 import os
+import hashlib
+
+def criptografar(senha):
+    hash_object = hashlib.sha256()
+    hash_object.update(senha.encode('utf-8'))
+    return hash_object.hexdigest()
 
 class UserException(Exception):
     ...
@@ -29,7 +35,8 @@ class User():
                 break
             except UserException as e: 
                 print(f'<SISTEMA>: {e}')
-        
+
+        self.__password = criptografar(self.__password)
         credentials = {
             'username': self.__name,
             'password': self.__password
@@ -40,7 +47,9 @@ class User():
     def login(self):
         while True:
             try:
-                if input('Senha: ') != self.__password: raise UserException('Senha incorreta.')
+                password = criptografar(input('Senha: '))
+                criptografar(self.__password)
+                if password != self.__password: raise UserException('Senha incorreta.')
                 break
             except UserException as e:
                 print(f'<SISTEMA>: {e}')
