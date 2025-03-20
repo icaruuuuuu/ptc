@@ -22,7 +22,7 @@ class Server:
             while True:
                 conn, addr = self.__server.accept()
                 data = conn.recv(4096).decode('utf-8')
-                print(data)
+                # print(data)
 
                 for p in data.split(): 
                     if p != obter_hostname(self.__port) and p not in peersdb.peers: 
@@ -36,7 +36,7 @@ class Server:
         finally: self.finish()
 
     def handle_peer(self, conn:socket, addr:tuple):
-        print(f'Conexão aceita com {tuple_to_socket(addr)}')
+        # print(f'Conexão aceita com {tuple_to_socket(addr)}')
 
         try:
             while True:

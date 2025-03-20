@@ -34,15 +34,15 @@ class Client:
             if addr[0] in ['127.0.0.1', '127.0.1.1']: raise ClientException('conexão com localhost não permitida')
             conn = socket(AF_INET, SOCK_STREAM)
             conn.connect(addr)
-            print(f'Conexão estabelecida')
+            print(f'SISTEMA: Conexão estabelecida com {tuple_to_socket(addr)}')
             self.update_connections(conn)
             self.send_peers(conn, peers_to_str(hostname, peersdb.peers))
-            print(self.__connections)
+            # print(self.__connections)
             peersdb.add(tuple_to_socket(addr))
         except ClientException as e:
-            print(f'Erro ao conectar-se com o peer: {e}')
+            print(f'SISTEMA: Erro ao conectar-se com o peer {tuple_to_socket(addr)}: {e}')
         except Exception as e:
-            print(f'Erro ao conectar-se com o peer: {e}')
+            print(f'SISTEMA: Erro ao conectar-se com o peer {tuple_to_socket(addr)}: {e}')
             if conn in self.__connections.connections:
                 self.__connections.remove(conn)
     
