@@ -1,7 +1,8 @@
 from socket import *
 import platform
 
-def hostname():
-    if platform.system() == 'Linux': return gethostbyname(gethostname() + '.lan')
-    if platform.system() == 'Windows': return gethostbyname(gethostname() + '.lan')
-    
+def obter_hostname(port):
+    if platform.system() == 'Linux': hostname = gethostbyname(gethostname() + '.lan')
+    if platform.system() == 'Windows': hostname = gethostbyname(gethostname())
+    return hostname + f':{port}'
+
