@@ -1,8 +1,7 @@
 from socket import *
 from threading import Lock
 from peersdb import peersdb
-from hostname import obter_hostname
-from qol import *
+from utils import *
 
 class ClientException(Exception):
     def init(self, msg):

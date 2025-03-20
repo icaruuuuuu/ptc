@@ -1,9 +1,8 @@
 from socket import *
-from threading import Thread, Lock
+from threading import Thread
 from peersdb import peersdb
-from hostname import obter_hostname
 from client import *
-from qol import *
+from utils import *
 
 class Server:
     def __init__(self, port, client:Client):
