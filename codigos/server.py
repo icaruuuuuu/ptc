@@ -1,7 +1,8 @@
 from socket import *
 from threading import Thread, Lock
 from peersdb import peersdb
-from client import Client
+from hostname import obter_hostname
+from client import *
 from qol import *
 
 class Server:
@@ -15,12 +16,20 @@ class Server:
         self.__client = client
 
     def start(self):
+        global peersdb
+        global cliente
         print('Iniciando servidor...')
         try:
             while True:
                 conn, addr = self.__server.accept()
                 data = conn.recv(4096).decode('utf-8')
-                Thread(target=self.__client.multi_connect, args=(data.split(), self.__port)).start()
+                print(data)
+
+                for p in data.split(): 
+                    if p != obter_hostname(self.__port) and p not in peersdb.peers: 
+                        cliente.connect(socket_to_tuple(p), obter_hostname(self.__port))
+                        peersdb.add(p)
+
                 thread = Thread(target=self.handle_peer, args=(conn, addr))
                 self.__threads.append(thread)
                 thread.start()
@@ -28,10 +37,6 @@ class Server:
         finally: self.finish()
 
     def handle_peer(self, conn:socket, addr:tuple):
-        global peersdb
-        peersdb_copy = peersdb
-        peersdb_copy.add(tuple_to_socket(addr))
-        peersdb = peersdb_copy
         print(f'Conexão aceita com {tuple_to_socket(addr)}')
 
         try:
