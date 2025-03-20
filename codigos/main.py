@@ -4,7 +4,6 @@ from peersdb import peersdb
 from hostname import obter_hostname
 PORTA = int(input('Digite uma porta: '))
 
-cliente = Client()
 servidor = Server(PORTA, cliente)
 Thread(target=servidor.start, daemon=True).start()
 

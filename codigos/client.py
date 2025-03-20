@@ -4,6 +4,10 @@ from peersdb import peersdb
 from hostname import obter_hostname
 from qol import *
 
+class ClientException(Exception):
+    def init(self, msg):
+        super.__init__(msg)
+
 class Connections:
     def __init__(self):
         self.connections:set[socket] = set({})
@@ -28,12 +32,16 @@ class Client:
     def connect(self, addr : tuple, hostname : str):
         global peersdb
         try:
+            if addr[0] in ['127.0.0.1', '127.0.1.1']: raise ClientException('conexão com localhost não permitida')
             conn = socket(AF_INET, SOCK_STREAM)
             conn.connect(addr)
             print(f'Conexão estabelecida')
             self.update_connections(conn)
             self.send_peers(conn, peers_to_str(hostname, peersdb.peers))
             print(self.__connections)
+            peersdb.add(tuple_to_socket(addr))
+        except ClientException as e:
+            print(f'Erro ao conectar-se com o peer: {e}')
         except Exception as e:
             print(f'Erro ao conectar-se com o peer: {e}')
             if conn in self.__connections.connections:
@@ -41,6 +49,7 @@ class Client:
     
     def multi_connect(self, addrs:list[str], port):
         for addr in addrs:
+            print(addr)
             if addr not in peersdb.peers:
                 self.connect(socket_to_tuple(addr), obter_hostname(port))
     
@@ -66,3 +75,5 @@ class Client:
     def connections(self):
         # print(self.__connections)
         return self.__connections.connections, self.__concount
+
+cliente = Client()

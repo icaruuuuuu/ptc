@@ -23,17 +23,3 @@ class PeersDatabase:
             if peer in self.peers: self.peers.remove(peer)
 
 peersdb = PeersDatabase()
-if __name__ == '__main__':
-    def thread_func():
-        global peersdb
-        for i in range(5):
-            peersdb.update(f'{i}.{i}.{i}.{i}:{i}')
-            print(peersdb)
-
-
-    Thread(target=thread_func).start()
-    Thread(target=thread_func).start()
-    Thread(target=thread_func).start()
-    Thread(target=thread_func).start()
-    Thread(target=thread_func).start()
-
