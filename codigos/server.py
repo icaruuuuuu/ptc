@@ -17,7 +17,7 @@ class Server:
     def start(self):
         global peersdb
         global cliente
-        print('Iniciando servidor...')
+        print('<SISTEMA>: Iniciando servidor...')
         try:
             while True:
                 conn, addr = self.__server.accept()
@@ -32,7 +32,7 @@ class Server:
                 thread = Thread(target=self.handle_peer, args=(conn, addr))
                 self.__threads.append(thread)
                 thread.start()
-        except Exception as e: print(f'Erro no servidor. {e}')
+        except Exception as e: print(f'<SISTEMA>: Erro no servidor. {e}')
         finally: self.finish()
 
     def handle_peer(self, conn:socket, addr:tuple):
@@ -46,7 +46,7 @@ class Server:
                 msg = data.decode('utf-8')
                 print(f'{msg}')
         except Exception as e:
-            print(f'Erro ao tratar conexão com {addr}: {e}')
+            print(f'<SISTEMA>: Erro ao tratar conexão com {addr}: {e}')
         finally:
             conn.close()
             peersdb.remove(tuple_to_socket(addr))

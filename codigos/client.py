@@ -4,8 +4,7 @@ from peersdb import peersdb
 from utils import *
 
 class ClientException(Exception):
-    def init(self, msg):
-        super.__init__(msg)
+    ...
 
 class Connections:
     def __init__(self):
@@ -34,15 +33,15 @@ class Client:
             if addr[0] in ['127.0.0.1', '127.0.1.1']: raise ClientException('conexão com localhost não permitida')
             conn = socket(AF_INET, SOCK_STREAM)
             conn.connect(addr)
-            print(f'SISTEMA: Conexão estabelecida com {tuple_to_socket(addr)}')
+            print(f'<SISTEMA>: Conexão estabelecida com {tuple_to_socket(addr)}')
             self.update_connections(conn)
             self.send_peers(conn, peers_to_str(hostname, peersdb.peers))
             # print(self.__connections)
             peersdb.add(tuple_to_socket(addr))
         except ClientException as e:
-            print(f'SISTEMA: Erro ao conectar-se com o peer {tuple_to_socket(addr)}: {e}')
+            print(f'<SISTEMA>: Erro ao conectar-se com o peer {tuple_to_socket(addr)}: {e}')
         except Exception as e:
-            print(f'SISTEMA: Erro ao conectar-se com o peer {tuple_to_socket(addr)}: {e}')
+            print(f'<SISTEMA>: Erro ao conectar-se com o peer {tuple_to_socket(addr)}: {e}')
             if conn in self.__connections.connections:
                 self.__connections.remove(conn)
     
@@ -58,7 +57,7 @@ class Client:
             # print(f'Enviando mensagem para {c.getpeername()}')
             try: c.sendall(msg.encode('utf-8'))
             except Exception as e: 
-                print(f'Erro ao enviar mensagem: {e}')
+                print(f'<SISTEMA>: Erro ao enviar mensagem: {e}')
                 self.__connections.remove(c)
                 c.close()
     
