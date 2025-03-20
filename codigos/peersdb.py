@@ -1,6 +1,5 @@
-from threading import Thread, Lock
-from time import sleep
-from qol import *
+from threading import Lock
+from utils import *
 
 class PeersDatabase:
     def __init__(self):

@@ -1,7 +1,7 @@
 from server import *
 from client import *
+from utils import obter_hostname
 from peersdb import peersdb
-from hostname import obter_hostname
 PORTA = int(input('Digite uma porta: '))
 
 servidor = Server(PORTA, cliente)

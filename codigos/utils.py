@@ -1,3 +1,10 @@
+from socket import *
+import platform
+def obter_hostname(port):
+    if platform.system() == 'Linux': hostname = gethostbyname(gethostname() + '.lan')
+    if platform.system() == 'Windows': hostname = gethostbyname(gethostname())
+    return hostname + f':{port}'
+
 def tuple_to_socket(addr: tuple) -> str:
     return f'{addr[0]}:{addr[1]}'
 
