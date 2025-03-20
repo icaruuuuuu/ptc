@@ -3,6 +3,7 @@ from client import *
 from utils import obter_hostname
 from peersdb import peersdb
 from userinfo.userinfo import User, UserException
+from logs.logger import logger
 
 usuario = User()
 usuario.login()
@@ -24,7 +25,9 @@ if __name__ == '__main__':
         if e[0] == '/': 
             try: comandos[e.split()[0]](e)
             except Exception as e: print(f'<SISTEMA>: Erro ao executar comando: {e}')
-        else: cliente.send_msg(f'<{usuario}>: {e}')
+        else: 
+            cliente.send_msg(f'<{usuario}>: {e}')
+            logger.log(f'<{usuario}>: {e}')
         
 
 

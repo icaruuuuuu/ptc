@@ -3,6 +3,7 @@ from threading import Thread
 from peersdb import peersdb
 from client import *
 from utils import *
+from logs.logger import logger
 
 class Server:
     def __init__(self, port, client:Client):
@@ -45,6 +46,7 @@ class Server:
 
                 msg = data.decode('utf-8')
                 print(f'{msg}')
+                logger.log(msg)
         except Exception as e:
             print(f'<SISTEMA>: Erro ao tratar conexão com {addr}: {e}')
         finally:
